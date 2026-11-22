@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0d9f96">
+  <meta name="description" content="MediTime medicine reminder and daily medication tracker.">
+  <title>MediTime | Medicine Reminder</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="MediTime home">
+        <span class="brand-icon">✚</span>
+        <span>MediTime</span>
+      </a>
+      <p class="brand-caption">Your health companion</p>
+
+      <nav class="navigation" aria-label="Main navigation">
+        <button class="nav-link active" data-page="dashboard">⌂ <span>Dashboard</span></button>
+        <button class="nav-link" data-page="medicines">▣ <span>My Medicines</span></button>
+        <button class="nav-link" data-page="history">◷ <span>History</span></button>
+        <button class="nav-link" data-page="settings">⚙ <span>Settings</span></button>
+      </nav>
+
+      <div class="sidebar-note">
+        <span>♥</span>
+        <p>Small steps, healthier days.</p>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow" id="todayDate"></p>
+          <h1 id="pageHeading">Good day!</h1>
+          <p class="subheading">Let's keep your health on track.</p>
+        </div>
+        <div class="top-actions">
+          <button id="installBtn" class="outline-btn hidden" type="button">Install app</button>
+          <button id="themeBtn" class="icon-btn" type="button" aria-label="Toggle dark mode">☾</button>
+        </div>
+      </header>
+
+      <section class="page active" id="dashboard">
+        <div class="hero-card">
+          <div>
+            <span class="hero-label">YOUR DAILY HEALTH ROUTINE</span>
+            <h2>Take care of yourself, one dose at a time.</h2>
+            <p>Keep your medicines organized and stay consistent.</p>
+            <button class="hero-button" data-add-medicine type="button">+ Add medicine</button>
+          </div>
+          <div class="hero-art" aria-hidden="true">💊</div>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card">
+            <span class="stat-icon">▣</span>
+            <p>Total medicines</p>
+            <strong id="totalCount">0</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-icon green">✓</span>
+            <p>Doses taken today</p>
+            <strong id="takenCount">0</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-icon orange">◷</span>
+            <p>Doses remaining</p>
+            <strong id="remainingCount">0</strong>
+          </article>
+        </div>
+
+        <section class="panel progress-panel">
+          <div class="section-heading">
+            <div>
+              <h2>Daily progress</h2>
+              <p>Your medication routine for today</p>
+            </div>
+            <strong id="progressPercent">0%</strong>
+          </div>
+          <div class="progress-track">
+            <div id="progressBar" class="progress-fill"></div>
+          </div>
+          <p id="progressMessage" class="muted">Let's get started!</p>
+        </section>
+
+        <div class="section-heading schedule-heading">
+          <div>
+            <h2>Today's schedule</h2>
+            <p>All your scheduled medicines</p>
+          </div>
+          <button class="text-button" data-go-page="medicines" type="button">View all →</button>
+        </div>
+        <div id="todayList" class="medicine-list"></div>
+      </section>
+
+      <section class="page" id="medicines">
+        <div class="section-heading">
+          <div>
+            <h2>My medicines</h2>
+            <p>Manage your medication routine</p>
+          </div>
+          <button class="primary-btn" data-add-medicine type="button">+ Add medicine</button>
+        </div>
+        <div id="medicineList" class="medicine-list"></div>
+      </section>
+
+      <section class="page" id="history">
+        <div class="section-heading">
+          <div>
+            <h2>Medicine history</h2>
+            <p>Your recorded medication activity</p>
+          </div>
+          <button class="outline-btn" id="clearHistoryBtn" type="button">Clear history</button>
+        </div>
+        <div id="historyList" class="history-list"></div>
+      </section>
+
+      <section class="page" id="settings">
+        <h2>Settings</h2>
+        <p class="muted">Customize your MediTime experience.</p>
+
+        <article class="panel setting-card">
+          <h3>Notifications</h3>
+          <p>Allow browser notifications for medicine reminders.</p>
+          <button class="primary-btn" id="notificationBtn" type="button">Enable notifications</button>
+          <p id="notificationStatus" class="muted"></p>
+        </article>
+
+        <article class="panel setting-card">
+          <h3>Voice reminder</h3>
+          <p>Speak the medicine name when a reminder appears.</p>
+          <label class="switch-row">
+            <span>Enable voice reminders</span>
+            <input type="checkbox" id="voiceToggle">
+          </label>
+        </article>
+
+        <article class="panel setting-card">
+          <h3>Display</h3>
+          <label class="switch-row">
+            <span>Large text</span>
+            <input type="checkbox" id="largeTextToggle">
+          </label>
+        </article>
+
+        <article class="panel setting-card">
+          <h3>Caregiver details</h3>
+          <p>Save a caregiver's contact details on this device.</p>
+          <label for="caregiverName">Name</label>
+          <input class="field" id="caregiverName" placeholder="Caregiver name">
+          <label for="caregiverPhone">Phone number</label>
+          <input class="field" id="caregiverPhone" type="tel" placeholder="+92...">
+          <button class="primary-btn" id="saveCaregiverBtn" type="button">Save details</button>
+          <p class="muted">Saving details does not send alerts. Automatic caregiver notifications need a secure backend service.</p>
+        </article>
+
+        <article class="panel setting-card">
+          <h3>Language</h3>
+          <label for="languageSelect">Choose language</label>
+          <select class="field" id="languageSelect">
+            <option value="en">English</option>
+            <option value="ur">Urdu (basic interface)</option>
+          </select>
+        </article>
+
+        <article class="panel setting-card">
+          <h3>Your data</h3>
+          <p>Your medicines and history are stored in this browser on this device.</p>
+          <button class="danger-btn" id="deleteAllBtn" type="button">Delete all app data</button>
+        </article>
+      </section>
+
+      <footer class="footer">
+        MediTime is a reminder tool, not a medical advice service.
+      </footer>
+    </main>
+  </div>
+
+  <!-- Add/Edit medicine dialog -->
+  <dialog id="medicineDialog" class="dialog">
+    <form id="medicineForm">
+      <div class="dialog-heading">
+        <div>
+          <p class="eyebrow">MEDICATION DETAILS</p>
+          <h2 id="dialogTitle">Add medicine</h2>
+        </div>
+        <button type="button" class="icon-btn" data-close-dialog aria-label="Close">×</button>
+      </div>
+
+      <input type="hidden" id="medicineId">
+
+      <label for="medicineName">Medicine name *</label>
+      <input class="field" id="medicineName" required maxlength="80" placeholder="e.g. Paracetamol">
+
+      <label for="medicineDose">Dose *</label>
+      <input class="field" id="medicineDose" required maxlength="50" placeholder="e.g. 1 tablet">
+
+      <label for="medicineTime">Reminder time *</label>
+      <input class="field" id="medicineTime" type="time" required>
+
+      <label for="medicineRepeat">Repeat</label>
+      <select class="field" id="medicineRepeat">
+        <option value="Daily">Every day</option>
+        <option value="Weekdays">Weekdays</option>
+        <option value="Weekly">Weekly</option>
+      </select>
+
+      <label for="medicineFood">Food instruction</label>
+      <select class="field" id="medicineFood">
+        <option value="Any time">Any time</option>
+        <option value="Before food">Before food</option>
+        <option value="After food">After food</option>
+        <option value="With food">With food</option>
+      </select>
+
+      <label for="medicineStock">Stock quantity</label>
+      <input class="field" id="medicineStock" type="number" min="0" max="9999" value="30">
+
+      <label for="medicinePhoto">Medicine photo (optional)</label>
+      <input class="field file-field" id="medicinePhoto" type="file" accept="image/*">
+      <img id="photoPreview" class="photo-preview hidden" alt="Selected medicine">
+
+      <div class="dialog-actions">
+        <button type="button" class="outline-btn" data-close-dialog>Cancel</button>
+        <button type="submit" class="primary-btn">Save medicine</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Reminder dialog -->
+  <dialog id="alarmDialog" class="dialog alarm-dialog">
+    <div class="alarm-symbol">⏰</div>
+    <p class="eyebrow">MEDICINE REMINDER</p>
+    <h2>It's time for your medicine</h2>
+    <h3 id="alarmName"></h3>
+    <p id="alarmDose" class="muted"></p>
+    <p id="alarmFood" class="muted"></p>
+    <button id="alarmTakenBtn" class="primary-btn full-width" type="button">✓ Mark as taken</button>
+    <button id="alarmSnoozeBtn" class="outline-btn full-width" type="button">Snooze 10 minutes</button>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
