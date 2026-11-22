@@ -1,0 +1,20 @@
+
+{
+  "name": "MediTime Medicine Reminder",
+  "short_name": "MediTime",
+  "description": "A simple medicine reminder and daily medication tracker.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f3f8fa",
+  "theme_color": "#0d9f96",
+  "icons": [
+    {
+      "src": "assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
